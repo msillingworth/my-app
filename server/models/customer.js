@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
-const inlandcosts = require('./models/inlandcosts');
-const tax = require('./models/tax');
-const platts = require('./models/platts');
-const transport = require('./models/transport');
+const inlandcosts = require('./inlandcosts');
+const tax = require('./tax');
+const platts = require('./platts');
+const transport = require('./transport');
+// const user = require('./models/user');
 
 let customerSchema = mongoose.Schema(
     {
         customer: [
             {
-             name: String,
+             customerName: String,
              soldto: Number,
              price_proposal: [
                  {
@@ -21,11 +22,16 @@ let customerSchema = mongoose.Schema(
                      excisePayable: Boolean,             // Is Fuel Excise payable?  True or False
                      businessUnit: String,               // Used to build the overheads component of price
                      shiptoElements: [
-                         {
-                             shipto: Number,                 // Ship to Number from Salesforce
+                         { 
+                            shipto: Number,                 // Ship to Number from Salesforce
                              shiptoName: String,             // Delivery location number
                              gps: String,                    // Delivery location co-ordinates
-                             product: String,                // Product to be sold [Diesel, ULP, PULP]  
+                             productItemType: String,      // Product to be sold [Diesel, ULP, PULP]  
+                             productItem: String,
+                             item_number: Number,
+                             supplyTerminal: String,
+                             supplyDepot: String,
+                             incumbentSupplier: String,
                              volume: Number,                 // Volume in litres
                              storage: Number,
                              safeFillLevel: Number,
@@ -33,8 +39,8 @@ let customerSchema = mongoose.Schema(
                              platts,
                              tax,
                              transport,
-                             supplyTerminal: String,
-                             supplyDepot: String,
+                             temperatureAdjustmentFactor: Number,
+                             exciseBenefit: Number,
                          }
                      ],
                      notes: String,
